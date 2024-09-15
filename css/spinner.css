@@ -1,0 +1,55 @@
+.spinner {
+  border: 8px solid #f3f3f3;
+  /* Light grey */
+  border-top: 8px solid #09623e;
+  /* Blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 2s linear infinite;
+  margin: 0 auto;
+  /* Centra horizontalmente */
+}
+
+.blockUI .blockMsg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.blockUI.blockOverlay {
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.blockUI.blockMsg.blockElement {
+  z-index: 1070;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-group-custom {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* En pantallas pequeñas, los botones se organizan en columna */
+@media (max-width: 576px) {
+  .btn-group-custom {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-group-custom .btn {
+    width: 100%; /* Los botones ocupan todo el ancho */
+  }
+}

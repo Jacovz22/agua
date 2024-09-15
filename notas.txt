@@ -1,0 +1,7 @@
+# Notas del 10/08/2024
+
+En la tabla Empleados se actualiza el tipo de dato de N_Exterior y N_Interior  por un varchar
+
+ALTER TABLE Empleados
+MODIFY COLUMN N_Exterior VARCHAR(10) DEFAULT '',
+MODIFY COLUMN N_Interior VARCHAR(10) DEFAULT '';

@@ -1,0 +1,18 @@
+{
+    "name": "checo/php-excel",
+    "autoload": {
+        "psr-4": {
+            "Checo\\PhpExcel\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ChecoMR17",
+            "email": "smarcosrdriguez@gmail.com"
+        }
+    ],
+    "require": {
+         "phpoffice/phpexcel": "*",
+        "phpoffice/phpspreadsheet": "^1.29"
+    }
+}

@@ -1,0 +1,13 @@
+.Fondo_D {
+   background-image: url(../img/fondo_p.avif);
+   background-repeat: no-repeat;
+   background-size: cover;
+}
+
+.Imagen_Logo {
+    object-fit: scale-down;
+}
+
+.font_color{
+    background: linear-gradient(#f5ea97, 10%, #dff3ce) !important;
+}
