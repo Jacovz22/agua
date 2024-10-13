@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="bg-gradient-success">
+<body class="bg-gradient-info">
 
     <div class="container">
 
@@ -39,13 +39,13 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">ASB ADMIN</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">CASAPA</h1>
                                         <h1 class="h4 text-gray-900 mb-4">¡BIENVENIDOS!</h1>
                                     </div>
                                     <div class="text-center">
                                         <span id="Alert_Login" class="text-danger"></span>
                                     </div>
-                                    <form class="user" id="Form_Login" name="Form_Login">
+                                    <form class="user" id="formLogin" name="formLogin">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" id="User" name="User" placeholder="Usuario" required>
                                         </div>
@@ -56,9 +56,6 @@
                                         <button type="submit" class=" btn btn-primary btn-user btn-block">
                                             Login <i class="fas fa-sign-in-alt"></i>
                                         </button>
-                                        <a href="/index.html" class=" btn btn-secondary btn-user btn-block">
-                                            Regresar
-                                        </a>
                                     </form>
                                     <hr>
                                 </div>

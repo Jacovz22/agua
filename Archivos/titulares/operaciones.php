@@ -38,6 +38,12 @@ $montoPar = isset($_POST['montoPar']) ? limpiarDatos($_POST['montoPar']) : "";
 $metodoPP = isset($_POST['metodoPP']) ? limpiarDatos($_POST['metodoPP']) : "";
 $estatusPP = isset($_POST['estatusPP']) ? limpiarDatos($_POST['estatusPP']) : "";
 
+// User
+$idUserT = isset($_POST['idUserT']) ? limpiarDatos($_POST['idUserT']) : "";
+$userName = isset($_POST['userName']) ? limpiarDatos($_POST['userName']) : "";
+$passUser = isset($_POST['passUser']) ? limpiarDatos($_POST['passUser']) : "";
+$rolUser = isset($_POST['rolUser']) ? limpiarDatos($_POST['rolUser']) : "";
+
 $options = "";
 $datos = array();
 switch ($_GET["op"]) {
@@ -820,5 +826,67 @@ switch ($_GET["op"]) {
             );
         }
 
+        break;
+    case 'saveUser':
+        try {
+            if ($idUserT == "") { //Insert
+                $sqlCount = "SELECT COUNT(*) AS count FROM Usuarios WHERE Nombre=?";
+                $resultSqlCount = ejecutarConsultaSimpleFila($sqlCount, [$userName]);
+                if (!$resultSqlCount) {
+                    throw new Exception("Ocurrió un error al consultar datos.", 409);
+                }
+                if ($resultSqlCount["count"] == 0) { // aun no existe
+                    $pwd_hash = password_hash($passUser, PASSWORD_DEFAULT);
+                    // Inicializa la consulta base
+                    $sqlSaveTitular = "INSERT INTO Usuarios(Nombre, Contrasena, TipoUsuario, Estatus) VALUES (?,?,?,?)";
+                    // Ejecuta la consulta
+                    $resultSqlSave = ejecutarInsert($sqlSaveTitular, [$userName, $pwd_hash, $rolUser, "A"]);
+
+                    if ($resultSqlSave) {
+                        //actualizamos el los Titulares
+                        $queryUserT = "UPDATE Titulares SET UsuarioID=? WHERE TitularID=?";
+                        $resultAU = ejecutarUpdate($queryUserT, [$resultSqlSave, $TitularID]);
+
+                        if ($resultAU > 0) {
+                            echo json_encode(
+                                array(
+                                    "typeMessage" => array(
+                                        "type" => "success",
+                                        "title" => "Usuario creado exitosamente",
+                                        "code" => 200,
+                                    ),
+                                    "description" => array(
+                                        "Message" => "El titular ha sido creado correctamente y ya está disponible en el sistema.",
+                                    )
+                                ),
+                                JSON_UNESCAPED_UNICODE
+                            );
+                        } else {
+                            throw new Exception("Ocurrió un error al consultar datos.", 409);
+                        }
+                    } else {
+                        throw new Exception("Error al guardar el usuario.", 409);
+                    }
+                } else {
+                    throw new Exception("Usuario existente.", 409);
+                }
+            } else { // Update
+
+            }
+        } catch (\Throwable $th) {
+            echo json_encode(
+                array(
+                    "typeMessage" => array(
+                        "type" => "warning",
+                        "title" => "",
+                        "code" => 409,
+                    ),
+                    "description" => array(
+                        "message" => $th->getMessage()
+                    )
+                ),
+                JSON_UNESCAPED_UNICODE
+            );
+        }
         break;
 }

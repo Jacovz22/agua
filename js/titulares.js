@@ -17,9 +17,73 @@ $(document).ready(() => {
     guardarPagoPar(e);
   });
 
+  $("#formUserT").on("submit", function (e) {
+    saveUser(e);
+  });
+
   twoSearchAddress();
   listTitulares();
 });
+
+let saveUser = (e) => {
+  e.preventDefault();
+  try {
+    let data = new FormData($("#formUserT")[0]);
+    var TitularID = $("#TitularID").val();
+    Swal.fire({
+      title: "¿Estás seguro(a) de guardar?",
+      text: "",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#0a6541",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Continuar",
+    }).then(async (Opcion) => {
+      if (Opcion.isConfirmed) {
+        data.append("TitularID", TitularID);
+        console.log(data);
+        spinner();
+        await delay(1000);
+        $.ajax({
+          type: "POST",
+          url: "../Archivos/titulares/operaciones.php?op=saveUser",
+          data: data,
+          contentType: false,
+          processData: false,
+          dataType: "json",
+          success: function (result) {
+            $.unblockUI();
+            Swal.fire({
+              position: "center",
+              icon: result.typeMessage.type,
+              title: result.typeMessage.title,
+              html: recorrerObjeto(result.description),
+              showConfirmButton: true,
+            });
+
+            if (result.typeMessage.code == 200) {
+            }
+          },
+        });
+      } else {
+        Swal.fire({
+          position: "center",
+          icon: "info",
+          title: "¡Operación cancelada!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  } catch (error) {
+    Swal.fire({
+      position: "center",
+      icon: "error",
+      title: "Ocurrio un error inesperado",
+      text: error,
+    });
+  }
+};
 
 let saveTitular = (e) => {
   e.preventDefault();
@@ -377,6 +441,7 @@ let dataTitular = (TitularID) => {
         $("#idDireccionTitular").val(result.data.DireccionID);
         $("#idDireccionT").val(result.data.DireccionTomaID);
         $("#obs").val(result.data.Observaciones);
+        $("#btnUserNew").attr("disabled", false);
         $.unblockUI(result.data);
       },
       "JSON"
@@ -645,3 +710,21 @@ let dataPagosPar = (idPagoPar) => {
     });
   }
 };
+
+$("#Btn_Limpiar_C").on("click", function () {
+  $("#btnUserNew").attr("disabled", true);
+});
+
+$("#btnUserNew").on("click", function () {
+  try {
+    console.log("Modal");
+    $("#modalUser").modal("show");
+  } catch (error) {
+    Swal.fire({
+      position: "center",
+      icon: "error",
+      title: "Ocurrio un error inesperado",
+      text: error,
+    });
+  }
+});

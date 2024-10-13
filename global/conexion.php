@@ -5,7 +5,7 @@ $host = "localhost";
 $port = 3306;
 $user = "root";
 $password = "smr26";
-$BD = "agua";
+$BD = "water";
 
 if ($host && $user && $password && $BD && $port) {
     $conexion = new mysqli($host, $user, $password, $BD, $port);
