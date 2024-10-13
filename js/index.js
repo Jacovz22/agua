@@ -12,7 +12,7 @@ let login = async (e) => {
     await delay(1000);
     $.ajax({
       type: "POST",
-      url: "../Archivos/login/operaciones.php?op=login",
+      url: "Archivos/login/operaciones.php?op=login",
       data: data,
       contentType: false,
       processData: false,
